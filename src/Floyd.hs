@@ -47,12 +47,15 @@ floydHeuristic ai | points' W >= pointsForWin = hugeNumber
 type MarkerHeuristic = Board -> Player -> AIValue
 type RingHeuristic   = Board -> Player -> AIValue
 
+-- Add all the markers on board and multiply by 10!
 mhNumber :: MarkerHeuristic
 mhNumber b p = (10 *) $ length $ markers p b
 
+-- All possible ring moves over the ring list.
 rhRingMoves :: RingHeuristic
 rhRingMoves b p = (1 *) $ sum $ map (length . ringMoves b) $ rings p b
 
+-- All possible board positions reachable by one of the rings.
 rhConnected :: RingHeuristic
 rhConnected b p = (1 *) $ length $ filter connectedToRings coords
      where connectedToRings c = any (c `connected`) (rings p b)
